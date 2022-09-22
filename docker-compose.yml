@@ -1,0 +1,6 @@
+services:
+    bot:
+        restart: unless-stopped
+        build: .
+        env_file:
+            - .deploy.env
