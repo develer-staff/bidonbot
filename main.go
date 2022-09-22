@@ -106,6 +106,19 @@ func main() {
 	//    bot.Message(msg.Channel, "Antani la supercazzola, con scappellamento a destra!")
 	//})
 
+	if os.Getenv("KEEPALIVE") == "true" {
+		log.Fatalln(keepAlive(bot))
+
+		return
+	}
+
+	fmt.Printf("Run Bot server\n\r")
+	if err := bot.Start(); err != nil {
+		log.Fatalln(err)
+	}
+}
+
+func keepAlive(bot *slackbot.Bot) error {
 	fmt.Printf("Run Bot server\n\r")
 	go func(b *slackbot.Bot) {
 		if err := b.Start(); err != nil {
@@ -170,5 +183,5 @@ func main() {
 	}()
 
 	fmt.Printf("Run HTTP server on port:%v\n\r", httpPort)
-	http.ListenAndServe(":"+httpPort, nil)
+	return http.ListenAndServe(":"+httpPort, nil)
 }
